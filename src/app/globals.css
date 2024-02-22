@@ -2,7 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+body {
+  background-color: black;
+}
+
+
+input {
+  @apply w-[400px] border border-teal-200 py-2 px-6 bg-gray-800 text-white;
+}
+
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -30,4 +39,4 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
+} */
