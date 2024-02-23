@@ -131,6 +131,10 @@ const AddBook = ({ email }: { email: string }) => {
             type="number"
             placeholder="Year Published"
           />
+          <input
+            type="number"
+            placeholder="Rating"
+          />
         </div>
 
         {/** characters */}

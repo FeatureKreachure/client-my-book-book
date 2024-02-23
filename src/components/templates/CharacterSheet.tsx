@@ -16,15 +16,26 @@ const CharacterSheet = ({
   onDeleteCharacter,
 }: CharacterSheetProps) => {
   return (
-    <div>
-      <h1>Character Sheet</h1>
+    <div className="flex items-center justify-center">
       <ul>
         {characters.map((character, index) => (
-          <li key={index}>
-            <strong>Name:</strong> {character.name}
+          <li
+            key={index}
+            className="border border-white rounded-md my-5 p-3 flex flex-col items-center w-[300px]" // Set a fixed width as per your requirement
+          >
+            <strong>{character.name}</strong>
             <br />
-            <strong>Description:</strong> {character.description} <br />
-            <button onClick={() => onDeleteCharacter(index)}>Delete</button>
+            <div className="max-w-full">
+              <p>{character.description}</p> <br />
+            </div>
+            <div>
+              <button
+                className="border border-white rounded-md p-2 hover:border-teal-300 hover:text-teal-300 duration-200"
+                onClick={() => onDeleteCharacter(index)}
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
