@@ -5,23 +5,6 @@ import { useRouter } from "next/navigation";
 import CharacterSheet from "./templates/CharacterSheet";
 import AdditionalNotes from "./templates/AdditionalNotes";
 
-interface AdditionalField {
-  field: string;
-  note: string;
-}
-
-const extraFields: AdditionalField[] = [
-  { field: "Field 1", note: "Note 1" },
-  { field: "Field 2", note: "Note 2" },
-  // Add more additional fields as needed
-];
-
-const extraChars: Character[] = [
-  { name: "Character 1", description: "Description 1" },
-  { name: "Character 2", description: "Description 2" },
-  // Add more characters as needed
-];
-
 const AddBook = ({ email }: { email: string }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -29,7 +12,6 @@ const AddBook = ({ email }: { email: string }) => {
     undefined
   );
   const [genres, setGenres] = useState<string[]>([]);
-  const [publicBook, setPublicBook] = useState(true);
   const [coverImage, setCoverImage] = useState("");
 
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -45,24 +27,18 @@ const AddBook = ({ email }: { email: string }) => {
     { field: "", note: "" }
   );
 
-  const [dateOfPublication, setDateOfPublication] = useState<Date | undefined>(
-    undefined
-  );
-  const [dateStartedReading, setDateStartedReading] = useState<
-    Date | undefined
-  >(undefined);
-  const [dateFinishedReading, setDateFinishedReading] = useState<
-    Date | undefined
-  >(undefined);
-
   const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async () => {
     // e.preventDefault();
+    if (!title || !author) {
+      setError("!!! Title And Author Are Required.")
+    }
+
     try {
       console.log("adding book");
-      const res = await addBookByEmail(email, title, author, true);
+      const res = await addBookByEmail(email, title, author, true, characters, additionalFields);
 
       if (res?.error) {
         setError("All Fields Required");
@@ -110,6 +86,21 @@ const AddBook = ({ email }: { email: string }) => {
 
   return (
     <div>
+      <div className="px-10 flex gap-3">
+        <button
+          onClick={() => {
+            handleSubmit();
+          }}
+          className="text-white hover:text-teal-300 border border-white hover:border-teal-300 rounded-md px-4 py-2"
+        >
+          ADD BOOK
+        </button>
+        {error && (
+          <div>
+            <p className="text-white bg-red-500 rounded-md px-4 py-2">{error}</p>
+          </div>
+        )}
+      </div>
       {/* title aithor and published year */}
       <div className="flex justify-between px-10 py-5">
         <div className="flex flex-col mb-4 gap-3">
@@ -131,10 +122,7 @@ const AddBook = ({ email }: { email: string }) => {
             type="number"
             placeholder="Year Published"
           />
-          <input
-            type="number"
-            placeholder="Rating"
-          />
+          <input type="number" placeholder="Rating" />
         </div>
 
         {/** characters */}
@@ -156,7 +144,12 @@ const AddBook = ({ email }: { email: string }) => {
               setNewCharacter({ ...newCharacter, description: e.target.value })
             }
           />
-          <button className="text-white hover:text-teal-400 hover:border hover:rounded-md hover:border-teal-400" onClick={addCharacter}>Add Character</button>
+          <button
+            className="text-white border border-white rounded-md hover:text-teal-400 hover:border hover:rounded-md hover:border-teal-400"
+            onClick={addCharacter}
+          >
+            Add Character
+          </button>
           <CharacterSheet
             characters={characters}
             onDeleteCharacter={deleteCharacter}
@@ -168,7 +161,7 @@ const AddBook = ({ email }: { email: string }) => {
           <h1>Additional Notes</h1>
           <input
             type="text"
-            placeholder="Field"
+            placeholder="Title"
             value={newAdditionalField.field}
             onChange={(e) =>
               setNewAdditionalField({
@@ -180,7 +173,7 @@ const AddBook = ({ email }: { email: string }) => {
           <input
             type="text"
             placeholder="Note"
-            value={newAdditionalField.note} 
+            value={newAdditionalField.note}
             onChange={(e) =>
               setNewAdditionalField({
                 ...newAdditionalField,
@@ -188,22 +181,17 @@ const AddBook = ({ email }: { email: string }) => {
               })
             }
           />
-          <button className="text-white my-5 hover:text-teal-400 hover:border hover:rounded-md hover:border-teal-400" onClick={addAdditionalField}>Add Additional Field</button>
+          <button
+            className="text-white border border-white rounded-md hover:text-teal-400 hover:border hover:rounded-md hover:border-teal-400"
+            onClick={addAdditionalField}
+          >
+            Add Note
+          </button>
           <AdditionalNotes
             additionalFields={additionalFields}
             onDeleteField={deleteAdditionalField}
           />
         </div>
-      </div>
-      {/** button to addbook */}
-      <div className="text-white hover:text-teal-300">
-        <button
-          onClick={() => {
-            handleSubmit();
-          }}
-        >
-          ADD BOOK
-        </button>
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ export const fetchUser = async (userId: string) => {
 };
 
 export const fetchBooks = async (email: string) => {
-  const baseURL = `${process.env.REST_API_URL}book/email/${email}`
+  const baseURL = `${process.env.REST_API_URL}book/email/${email}`;
   const url = `http://127.0.0.1:5001/api/book/email/${email}`;
   try {
     const response = await fetch(baseURL, {
@@ -62,7 +62,9 @@ export const addBookByEmail = async (
   email: string,
   title: string,
   author: string,
-  publicStatus: boolean
+  publicStatus: boolean,
+  characters?: Character[],
+  additionalFields?: AdditionalField[]
 ) => {
   const url = `http://127.0.0.1:5001/api/book/email/${email}`;
   try {
@@ -77,6 +79,8 @@ export const addBookByEmail = async (
         title,
         author,
         public: publicStatus,
+        characters,
+        additionalFields,
       }),
     });
     if (!response.ok) {
