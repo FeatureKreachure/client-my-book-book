@@ -7,9 +7,11 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 const Login = async () => {
   const session = await getServerSession(authOptions);
 
+  // user logged in?
   if (session) {
     redirect("/dashboard");
   }
+  // user not logged in:
   return (
     <div className="mt-16">
       <LoginForm />

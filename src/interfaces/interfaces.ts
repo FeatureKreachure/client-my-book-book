@@ -11,12 +11,13 @@ interface AdditionalField {
 }
 
 interface Book {
+  _id: string;
   title: string;
   author: string;
   publishedYear?: number;
   genres: string[];
   public: boolean;
-  user: string; // the user id
+  user: string; // the id of the user who owns the book
   coverImage?: string;
   characters: Character[];
   additionalFields: AdditionalField[];

@@ -4,3 +4,5 @@ import { ReactNode } from "react";
 export const AuthProvider = ({ children }: {children: ReactNode}) => {
   return <SessionProvider>{children}</SessionProvider>;
 };
+
+// component to provide the nextAuth session

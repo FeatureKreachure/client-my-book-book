@@ -3,28 +3,26 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+// Component used to collect info and register a new user
 const RegisterForm = () => {
   const [username, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  // const baseUrl = "http://127.0.0.1:5001/api/"
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // prevent the default form behaviour
     e.preventDefault();
 
-    console.log("sending...");
-
+    // set error if required fields not populated
     if (!username || !email || !password) {
       setError("All fields are necessary.");
       return;
     }
 
     try {
-      // const hashed = await hashPassword(password);
-      // console.log(hashed)
+      // check if user already exists
       const resExist = await fetch("http://127.0.0.1:5001/api/user/exist", {
         method: "POST",
         headers: {
@@ -36,18 +34,20 @@ const RegisterForm = () => {
           password,
         }),
       });
-      console.log("sent. readin")
-      console.log(resExist)
 
+      // get message response from server
       const { message } = await resExist.json();
-      console.log(message)
+
+      // if user exists set error message
       if (message === "User Exists") {
         console.log(message)
         setError("User Already Exists");
         return;
       }
 
-      const res = await fetch("http://127.0.0.1:5001/api/user/", {
+      // if no existing user, post new user to DB
+      const url = `${process.env.NEXT_PUBLIC_REST_API_URL}user/`
+      const res = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const RegisterForm = () => {
         }),
       });
 
-      console.log("request sent");
+      // redirect to login page if user registered successfully
       if (res.status === 201) {
         const form = e.target as HTMLFormElement;
         form.reset();
@@ -72,6 +72,7 @@ const RegisterForm = () => {
     }
   };
 
+  // display UI on screen
   return (
     <div className="text-white grid place-items-center h-screen">
       <div className="shadow-lg shadow-teal-400 p-5 rounded-lg border-t-4 border-teal-400">

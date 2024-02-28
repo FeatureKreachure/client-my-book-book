@@ -2,6 +2,8 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "./../app/api/auth/[...nextauth]/route";
 
+// functions for protecting routes
+
 // if session, redirect
 export const toRedirectOrNot = async () => {
   const session = await getServerSession(authOptions);

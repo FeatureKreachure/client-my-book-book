@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
@@ -12,20 +11,23 @@ const LoginForm = () => {
 
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // prevent default behavior
     e.preventDefault();
+
+    // attempt sign in
     try {
-      console.log("trying")
       const res = await signIn("credentials", {
         email,
         password,
         redirect: false,
       });
 
+      // diaplay error or redirect to dashboard
       if (res?.error) {
         setError("invalid credentials");
       } else {
         router.replace("dashboard");
-        console.log("routed")
+        router.refresh()
       }
       
     } catch (error) {

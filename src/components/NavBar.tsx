@@ -2,6 +2,7 @@ import Link from "next/link";
 import AuthButton from "./molecules/AuthButton";
 import ProfileButton from "./molecules/ProfileButton";
 
+// Render the navbar
 const Navbar = () => {
   return (
     <nav className="py-4 bg-black border-b-2 border-white mx-5 fixed top-0 left-0 right-0 z-50">
@@ -16,6 +17,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex items-center">
+          {/** client-component buttons */}
           <ProfileButton />
           <AuthButton />
         </div>

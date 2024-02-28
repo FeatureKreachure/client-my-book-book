@@ -3,12 +3,11 @@ import AddBook from "@/components/AddBook";
 import { toStayOrNot } from "@/utils/redirect";
 
 const AddBookPage = async () => {
-  // const data = await fetchBooks();
+  // user logged in?
   const email = await toStayOrNot();
-  // const email = "123"
-
   return (
     <div className="mt-16 py-5">
+      {/** Render UI */}
       <AddBook email={email}/>
     </div>
   );

@@ -7,9 +7,11 @@ import { authOptions } from '../api/auth/[...nextauth]/route';
 const Register = async () => {
   const session = await getServerSession(authOptions)
 
+  // user logged in?
   if (session) {
     redirect("/dashboard")
   }
+  // user not logged in:
   return (
     <RegisterForm />
   )

@@ -8,6 +8,7 @@ import AdditionalNotes from "./templates/AdditionalNotes";
 const AddBook = ({ email }: { email: string }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  // unused stateful variables are present for future updates
   const [publishedYear, setPublishedYear] = useState<number | undefined>(
     undefined
   );
