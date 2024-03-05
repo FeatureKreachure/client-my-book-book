@@ -12,6 +12,7 @@ const EditBookPage = async ({ params }: { params: { id: string } }) => {
   const url = `${process.env.REST_API_URL}book/${bookId}`;
 
   // fetch book to be edited
+  // fetch book by id
   const response = await fetch(url, { method: "GET", cache: "no-store" });
   const book: Book = await response.json();
 

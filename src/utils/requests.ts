@@ -1,8 +1,5 @@
 import * as bcrypt from "bcryptjs";
 
-const serverUrl = process.env.REST_API_URL;
-const clientUrl = process.env.NEXT_PUBLIC_REST_API_URL;
-
 // utility functions for useage throughout the app
 
 export const hashPassword = async (text: string) => {
@@ -10,45 +7,10 @@ export const hashPassword = async (text: string) => {
   return hashedPassword;
 };
 
-// fetch user info based on a specific email
-// (because auth uses email as the uuid)
-export const fetchUserByEmail = async (email: string) => {
-  try {
-    const user = await fetch("http://127.0.0.1:5001/api/user/bymail", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-      }),
-    });
-    const doc = await user.json();
-    return doc.username;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// fetch user into from mongoDB uuid
-export const fetchUser = async (userId: string) => {
-  try {
-    const response = await fetch(`${serverUrl}/user/${userId}`, {
-      cache: "no-store",
-    });
-    if (!response.ok) {
-      throw new Error(`Problem fetching user: ${response.statusText}`);
-    }
-    console.log(response);
-    return await response.json();
-  } catch (error) {
-    console.error("Problem fetching user: ", error);
-  }
-};
-
 // fetch list of all books on the server
 // used in testing and for future updates
 // (if I ever get around to them)
+// used in server side comp: DashBoard
 export const fetchBooks = async (email: string) => {
   const baseURL = `${process.env.REST_API_URL}book/email/${email}`;
   try {
@@ -67,7 +29,9 @@ export const fetchBooks = async (email: string) => {
 
 // post a new book to the DB through the RESTful API
 // only collects and posts limited information for now
+// used in Client-Side Comp AddBook
 export const addBookByEmail = async (
+  apiUrl: string,
   email: string,
   title: string,
   author: string,
@@ -75,10 +39,10 @@ export const addBookByEmail = async (
   characters?: Character[],
   additionalFields?: AdditionalField[]
 ) => {
-  const fetchUrl = `${serverUrl}book/email/${email}`
-  const url = `http://127.0.0.1:5001/api/book/email/${email}`;
+  const fetchUrl = `${apiUrl}book/email/${email}`;
+  // const url = `http://127.0.0.1:5001/api/book/email/${email}`;
   try {
-    const response = await fetch(url, {
+    const response = await fetch(fetchUrl, {
       method: "POST",
       cache: "no-store",
       headers: {
@@ -104,6 +68,7 @@ export const addBookByEmail = async (
 };
 
 // patch book with the given UUID (in the url)
+// used in clientComp EditBook
 export const patchBook = async (
   url: string,
   title?: string,
@@ -131,24 +96,5 @@ export const patchBook = async (
     return patchedbook;
   } catch (error) {
     console.error("Failed To Patch Book: ", error);
-  }
-};
-
-// fetch the information of an individual book
-// based on the uuid
-export const fetchBookById = async (id: string) => {
-  const baseURL = `${process.env.REST_API_URL}book/${id}}`;
-  try {
-    const response = await fetch(baseURL, {
-      method: "GET",
-      cache: "no-store",
-    });
-    if (!response.ok) {
-      throw new Error(`Problem fetching books: ${response.statusText}`);
-    }
-    const book = await response.json();
-    return book;
-  } catch (error) {
-    console.error(error);
   }
 };

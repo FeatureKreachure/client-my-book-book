@@ -16,6 +16,7 @@ const ViewBookPage = async ({
   const url = `${process.env.REST_API_URL}book/${bookId}`;
 
   // fetch the book needed for ViewBook Component
+  // fetch book by Id
   const response = await fetch(url, { method: "GET", cache: "no-store" });
   const book: Book = await response.json();
 

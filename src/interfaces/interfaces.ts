@@ -29,6 +29,6 @@ interface Book {
 interface User {
   username: string;
   email: string;
-  password: string; // not necessarily going to be used
+  password: string; // hashed
   interests: string[];
 }

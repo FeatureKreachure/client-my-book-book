@@ -23,6 +23,7 @@ const RegisterForm = () => {
 
     try {
       // check if user already exists
+      // !test
       const resExist = await fetch(`${process.env.NEXT_PUBLIC_REST_API_URL}user/exist`, {
         method: "POST",
         headers: {

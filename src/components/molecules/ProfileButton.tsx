@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { fetchUserByEmail } from "@/utils/requests";
 
 const ProfileButton = () => {
   const { data: session } = useSession();

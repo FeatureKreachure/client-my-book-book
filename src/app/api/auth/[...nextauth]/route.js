@@ -15,6 +15,7 @@ export const authOptions = {
         const { email, password } = credentials;
         let user;
         try {
+          // fetch user by email
           const url = `${process.env.REST_API_URL}user/bymail`;
           const userDoc = await fetch(url, {
             method: "POST",

@@ -38,8 +38,9 @@ const AddBook = ({ email }: { email: string }) => {
     }
 
     try {
-      console.log("adding book");
+      const apiUrl = `${process.env.NEXT_PUBLIC_REST_API_URL}`;
       const res = await addBookByEmail(
+        apiUrl,
         email,
         title,
         author,
