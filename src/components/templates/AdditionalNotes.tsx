@@ -20,7 +20,7 @@ const AdditionalNotes= ({
         {additionalFields.map((field, index) => (
           <li
             key={index}
-            className="border border-white rounded-md my-5 p-3 flex flex-col items-center w-[500px]" 
+            className="border border-white rounded-md my-5 p-3 flex flex-col items-center w-[300px]" 
           >
             <strong>{field.field}</strong>
             <br />

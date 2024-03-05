@@ -32,9 +32,17 @@ const EditBook = ({ bookData }: EditBookProps) => {
       console.log("url:", url);
 
       // patch the book using mondoDB uuid and edited info
-      const res = await patchBook(url, editedTitle, editedAuthor, editedCharacters, editedAdditionalFields)
-      if (res.ok) {
+      const res = await patchBook(
+        url,
+        editedTitle,
+        editedAuthor,
+        editedCharacters,
+        editedAdditionalFields
+      );
+      if (res?.error) {
         // redirect to dashboard
+        console.log("error");
+      } else {
         router.replace("/dashboard");
         router.refresh();
       }

@@ -11,7 +11,7 @@ const truncateText = (text: string, maxLength: number) => {
 };
 
 const BookCard = ({ book }: BookCardProps) => {
-  const defaultImage = "/wizard.jpg";
+  const defaultImage = "/logo.svg";
   const router = useRouter();
 
   const handleCardClick = () => {

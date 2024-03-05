@@ -1,5 +1,7 @@
-const baseUrl = process.env.REST_API_URL;
 import * as bcrypt from "bcryptjs";
+
+const serverUrl = process.env.REST_API_URL;
+const clientUrl = process.env.NEXT_PUBLIC_REST_API_URL;
 
 // utility functions for useage throughout the app
 
@@ -8,8 +10,7 @@ export const hashPassword = async (text: string) => {
   return hashedPassword;
 };
 
-
-// fetch user info based on a specific email 
+// fetch user info based on a specific email
 // (because auth uses email as the uuid)
 export const fetchUserByEmail = async (email: string) => {
   try {
@@ -29,11 +30,10 @@ export const fetchUserByEmail = async (email: string) => {
   }
 };
 
-
 // fetch user into from mongoDB uuid
 export const fetchUser = async (userId: string) => {
   try {
-    const response = await fetch(`${baseUrl}/user/${userId}`, {
+    const response = await fetch(`${serverUrl}/user/${userId}`, {
       cache: "no-store",
     });
     if (!response.ok) {
@@ -46,9 +46,8 @@ export const fetchUser = async (userId: string) => {
   }
 };
 
-
 // fetch list of all books on the server
-// used in testing and for future updates 
+// used in testing and for future updates
 // (if I ever get around to them)
 export const fetchBooks = async (email: string) => {
   const baseURL = `${process.env.REST_API_URL}book/email/${email}`;
@@ -66,7 +65,6 @@ export const fetchBooks = async (email: string) => {
   }
 };
 
-
 // post a new book to the DB through the RESTful API
 // only collects and posts limited information for now
 export const addBookByEmail = async (
@@ -77,6 +75,7 @@ export const addBookByEmail = async (
   characters?: Character[],
   additionalFields?: AdditionalField[]
 ) => {
+  const fetchUrl = `${serverUrl}book/email/${email}`
   const url = `http://127.0.0.1:5001/api/book/email/${email}`;
   try {
     const response = await fetch(url, {
@@ -103,7 +102,6 @@ export const addBookByEmail = async (
     console.error("Problem fetching books: ", error);
   }
 };
-
 
 // patch book with the given UUID (in the url)
 export const patchBook = async (
@@ -136,8 +134,7 @@ export const patchBook = async (
   }
 };
 
-
-// fetch the information of an individual book 
+// fetch the information of an individual book
 // based on the uuid
 export const fetchBookById = async (id: string) => {
   const baseURL = `${process.env.REST_API_URL}book/${id}}`;

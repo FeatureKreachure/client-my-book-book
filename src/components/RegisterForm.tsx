@@ -23,7 +23,7 @@ const RegisterForm = () => {
 
     try {
       // check if user already exists
-      const resExist = await fetch("http://127.0.0.1:5001/api/user/exist", {
+      const resExist = await fetch(`${process.env.NEXT_PUBLIC_REST_API_URL}user/exist`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

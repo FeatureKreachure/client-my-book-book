@@ -9,11 +9,11 @@ const AddBook = ({ email }: { email: string }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   // unused stateful variables are present for future updates
-  const [publishedYear, setPublishedYear] = useState<number | undefined>(
-    undefined
-  );
-  const [genres, setGenres] = useState<string[]>([]);
-  const [coverImage, setCoverImage] = useState("");
+  // const [publishedYear, setPublishedYear] = useState<number | undefined>(
+  //   undefined
+  // );
+  // const [genres, setGenres] = useState<string[]>([]);
+  // const [coverImage, setCoverImage] = useState("");
 
   const [characters, setCharacters] = useState<Character[]>([]);
   const [newCharacter, setNewCharacter] = useState<Character>({
@@ -34,19 +34,25 @@ const AddBook = ({ email }: { email: string }) => {
   const handleSubmit = async () => {
     // e.preventDefault();
     if (!title || !author) {
-      setError("!!! Title And Author Are Required.")
+      setError("!!! Title And Author Are Required.");
     }
 
     try {
       console.log("adding book");
-      const res = await addBookByEmail(email, title, author, true, characters, additionalFields);
+      const res = await addBookByEmail(
+        email,
+        title,
+        author,
+        true,
+        characters,
+        additionalFields
+      );
 
       if (res?.error) {
         setError("All Fields Required");
       } else {
-        console.log("book added");
         router.replace("dashboard");
-        console.log("routed");
+        router.refresh();
       }
     } catch (error) {
       console.log(error);
@@ -98,7 +104,9 @@ const AddBook = ({ email }: { email: string }) => {
         </button>
         {error && (
           <div>
-            <p className="text-white bg-red-500 rounded-md px-4 py-2">{error}</p>
+            <p className="text-white bg-red-500 rounded-md px-4 py-2">
+              {error}
+            </p>
           </div>
         )}
       </div>
@@ -116,14 +124,14 @@ const AddBook = ({ email }: { email: string }) => {
             type="text"
             placeholder="Author"
           />
-          <input
+          {/* <input
             onChange={(e) =>
               setPublishedYear(parseInt(e.target.value) || undefined)
             }
             type="number"
             placeholder="Year Published"
           />
-          <input type="number" placeholder="Rating" />
+          <input type="number" placeholder="Rating" /> */}
         </div>
 
         {/** characters */}
@@ -199,31 +207,3 @@ const AddBook = ({ email }: { email: string }) => {
 };
 
 export default AddBook;
-
-{
-  /* <div className="text-white grid place-items-center">
-      <div className="shadow-lg shadow-teal-400 p-5 rounded-lg border-t-4 border-teal-400">
-        <h1 className="text-xl font-bold my-4">Add Book</h1>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <input
-            onChange={(e) => setTitle(e.target.value)}
-            type="text"
-            placeholder="Title"
-          />
-          <input
-            onChange={(e) => setAuthor(e.target.value)}
-            type="text"
-            placeholder="Author"
-          />
-          <button className="bg-white text-black hover:bg-teal-200 rounded-md px-6 py-2">
-            Add Book
-          </button>
-          {error && (
-            <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
-              {error}
-            </div>
-          )}
-        </form>
-      </div>
-    </div> */
-}

@@ -1,6 +1,6 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
 
 // authentication as per docs
 export const authOptions = {
@@ -11,43 +11,41 @@ export const authOptions = {
       credentials: {},
 
       async authorize(credentials) {
-        console.log("running")
+        console.log("running");
         const { email, password } = credentials;
         let user;
         try {
-          const userDoc = await fetch("http://127.0.0.1:5001/api/user/bymail", {
+          const url = `${process.env.REST_API_URL}user/bymail`;
+          const userDoc = await fetch(url, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              email
+              email,
             }),
           });
 
-          console.log("user: ", user)
+          console.log("user: ", user);
           const doc = await userDoc.json();
-          console.log("doc: ", doc)
+          console.log("doc: ", doc);
 
-          const passwordMatch = await bcrypt.compare(
-            password,
-            doc.password
-          );
+          const passwordMatch = await bcrypt.compare(password, doc.password);
 
           if (!passwordMatch) {
-            console.log("Passwords don't")
+            console.log("Passwords don't");
             return null;
           }
 
-          console.log("Passwords March")
+          console.log("Passwords March");
           user = doc;
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
         if (user) {
-          return user
+          return user;
         } else {
-          return null
+          return null;
         }
       },
     }),
