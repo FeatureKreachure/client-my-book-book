@@ -168,7 +168,7 @@ const AddBook = ({ email }: { email: string }) => {
 
         {/** additional fields */}
         <div className="text-white flex flex-col gap-3">
-          <h1>Additional Notes</h1>
+          <h1>Notes</h1>
           <input
             type="text"
             placeholder="Title"

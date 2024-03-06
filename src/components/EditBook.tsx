@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import EditableAdditionalNotes from "./templates/EditableAdditionalNotes";
 import EditableCharacterSheet from "./templates/EditableCharacterSheet";
-import { patchBook } from "@/utils/requests";
+import { deleteBook, patchBook } from "@/utils/requests";
 import { useRouter } from "next/navigation";
 
 interface EditBookProps {
@@ -51,6 +51,24 @@ const EditBook = ({ bookData }: EditBookProps) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      // create the url for delete
+      const url = `${process.env.NEXT_PUBLIC_REST_API_URL}book/${bookData._id}`;
+      // delete the book
+      const res = await deleteBook(url);
+      if (res?.error) {
+        // redirect to dashboard
+        console.log("error");
+      } else {
+        router.replace("/dashboard");
+        router.refresh();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="p-10 text-white flex items-center flex-col mt-16">
       <div className="flex items-center mb-6">
@@ -70,12 +88,20 @@ const EditBook = ({ bookData }: EditBookProps) => {
             className="text-slate-500 mb-2 bg-transparent focus:outline-none"
           />
           <br />
-          <button
-            className="px-3 py-2 rounded-md bg-violet-800 text-white hover:bg-violet-600"
-            onClick={handleSave}
-          >
-            Save Changes
-          </button>
+          <div className="flex gap-3">
+            <button
+              className="px-3 py-2 rounded-md bg-violet-800 text-white hover:bg-violet-600"
+              onClick={handleSave}
+            >
+              Save Changes
+            </button>
+            <button
+              className="px-3 py-2 rounded-md bg-red-800 text-white hover:bg-red-600"
+              onClick={handleDelete}
+            >
+              Delete Book
+            </button>
+          </div>
         </div>
       </div>
 
@@ -94,7 +120,7 @@ const EditBook = ({ bookData }: EditBookProps) => {
 
         <div className="w-1/2 pl-4">
           <h2 className="text-xl font-semibold mb-3 text-teal-400">
-            Additional Fields
+            Notes
           </h2>
           <EditableAdditionalNotes
             additionalFields={editedAdditionalFields}

@@ -39,7 +39,7 @@ const ViewBook = ({ bookData }: ViewBookProps) => {
 
         <div className="w-1/2 pl-4">
           <h2 className="text-xl font-semibold mb-3 text-teal-400">
-            Additional Fields
+            Notes
           </h2>
           {/** client side component to display the additional notes */}
           <AdditionalNotes

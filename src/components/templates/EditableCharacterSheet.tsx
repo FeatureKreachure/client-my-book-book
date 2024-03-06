@@ -23,6 +23,7 @@ const EditableCharacterSheet = ({
 
   const addCharacter = () => {
     if (newCharacter.name && newCharacter.description) {
+      // set edited characters to prev + new using spread operator
       setEditedCharacters((prevCharacters) => [
         ...prevCharacters,
         newCharacter,
@@ -54,6 +55,7 @@ const EditableCharacterSheet = ({
 
   const handleUpdateCharacter = () => {
     onUpdateCharacter(editedCharacters);
+    alert("Characters Updated Successfully");
   };
 
   // methods end
@@ -78,10 +80,17 @@ const EditableCharacterSheet = ({
           }
         />
         <button
-          className="text-white border border-white rounded-md hover:text-teal-400 hover:border hover:rounded-md hover:border-teal-400 w-[500px]"
+          className="text-white border border-white rounded-md hover:text-teal-400 hover:border hover:rounded-md hover:border-teal-400 px-3 py-2"
           onClick={addCharacter}
         >
           Add Character
+        </button>
+
+        <button
+          className="px-3 py-2 rounded-md bg-violet-800 text-white hover:bg-violet-600 border border-white"
+          onClick={handleUpdateCharacter}
+        >
+          Save Changes
         </button>
 
         <ul>
@@ -104,12 +113,12 @@ const EditableCharacterSheet = ({
               />
               <br />
               <div className="flex gap-3">
-                <button
+                {/* <button
                   className="border border-white rounded-md p-2 hover:border-teal-300 hover:text-teal-300 duration-200"
                   onClick={handleUpdateCharacter}
                 >
                   Update
-                </button>
+                </button> */}
                 <button
                   className="border border-white rounded-md p-2 hover:border-teal-300 hover:text-teal-300 duration-200"
                   onClick={() => deleteCharacter(index)}

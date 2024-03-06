@@ -2,6 +2,9 @@ import * as bcrypt from "bcryptjs";
 
 // utility functions for useage throughout the app
 
+// not used on client-side as of now
+// but may be in the future so
+// i'm leaving it here
 export const hashPassword = async (text: string) => {
   const hashedPassword = await bcrypt.hash(text, 10);
   return hashedPassword;
@@ -77,7 +80,7 @@ export const patchBook = async (
   additionalFields?: AdditionalField[]
 ) => {
   try {
-    console.log("attempting: ", url);
+    // console.log("attempting: ", url);
     const response = await fetch(url, {
       method: "PATCH",
       cache: "no-store",
@@ -92,9 +95,28 @@ export const patchBook = async (
       }),
     });
     const patchedbook = await response.json();
-    console.log("PATCHED: ", patchedbook);
+    // console.log("PATCHED: ", patchedbook);
     return patchedbook;
   } catch (error) {
     console.error("Failed To Patch Book: ", error);
+  }
+};
+
+// delete book
+export const deleteBook = async (apiUrl: string) => {
+  // url = apiUrl/book/:_id
+  try {
+    // const fetchUrl = `${apiUrl}book/${bookId}`;
+    const response = await fetch(apiUrl, {
+      method: "DELETE",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const deleteBook = await response.json();
+    return deleteBook;
+  } catch (error) {
+    console.error(error);
   }
 };

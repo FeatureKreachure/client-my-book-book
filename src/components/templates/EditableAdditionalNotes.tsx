@@ -45,6 +45,7 @@ const EditableAdditionalNotes = ({
 
   const handleUpdateField = () => {
     onUpdateField(editedFields);
+    alert("Update Successful");
   };
 
   return (
@@ -73,10 +74,16 @@ const EditableAdditionalNotes = ({
           }
         />
         <button
-          className="text-white border border-white rounded-md hover:text-teal-400 hover:border hover:rounded-md hover:border-teal-400 w-[500px]"
+          className="text-white border border-white rounded-md hover:text-teal-400 hover:border hover:rounded-md hover:border-teal-400 px-3 py-2"
           onClick={addAdditionalField}
         >
           Add Note
+        </button>
+        <button
+          className="px-3 py-2 rounded-md bg-violet-800 text-white hover:bg-violet-600 border border-white"
+          onClick={handleUpdateField}
+        >
+          Save Changes
         </button>
         <ul>
           {editedFields.map((field, index) => (
@@ -98,12 +105,12 @@ const EditableAdditionalNotes = ({
               />
               <br />
               <div className="flex gap-3">
-                <button
+                {/* <button
                   className="border border-white rounded-md p-2 hover:border-teal-300 hover:text-teal-300 duration-200"
                   onClick={handleUpdateField}
                 >
                   Update
-                </button>
+                </button> */}
                 <button
                   className="border border-white rounded-md p-2 hover:border-teal-300 hover:text-teal-300 duration-200"
                   onClick={() => deleteAdditionalField(index)}
