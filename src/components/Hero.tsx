@@ -10,7 +10,19 @@ const Hero = () => {
           Keep track of the books you read and manage your reading notes
           effortlessly.
         </p>
-        <Link href={"/login"} className="bg-teal-200 hover:bg-teal-400 text-black font-bold py-2 px-6 rounded-full duration-200">
+        <br />
+        <p>
+          For this branch we want to:
+          <ul>
+            <li>Sort out the additional book details</li>
+            <li>Maybe add Genres</li>
+            <li>Test GIT CLI Branching</li>
+          </ul>
+        </p>
+        <Link
+          href={"/login"}
+          className="bg-teal-200 hover:bg-teal-400 text-black font-bold py-2 px-6 rounded-full duration-200"
+        >
           Login or Sign Up
         </Link>
       </div>
